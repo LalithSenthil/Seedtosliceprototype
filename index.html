@@ -4,834 +4,847 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WildSlice — Order Printer</title>
+<title>WildSlice | Customer Orders</title>
 
 <style>
-:root {
-  --ink: #29251f;
-  --cream: #f4efe5;
-  --paper: #fffdf8;
-  --tomato: #d85d43;
-  --tomato-dark: #b94732;
-  --green: #71866a;
-  --line: #e7dfd2;
-}
-
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 15% 10%, rgba(216,93,67,.08), transparent 26rem),
-    radial-gradient(circle at 90% 85%, rgba(113,134,106,.10), transparent 24rem),
-    var(--cream);
-  color: var(--ink);
-  font-family: Inter, system-ui, sans-serif;
-  display: grid;
-  place-items: center;
-  padding: 32px 18px;
-}
-
-.page {
-  width: min(100%, 980px);
+    min-height: 100vh;
+    background: #f7f3eb;
+    color: #332e28;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 35px 20px 50px;
 }
 
 /* Header */
 
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 25px;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 65px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.brand-mark {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  background: #f9dfd5;
-  border-radius: 14px;
-  font-size: 23px;
-  transform: rotate(-5deg);
+.logo-icon {
+    font-size: 30px;
 }
 
-.brand-name {
-  font-weight: 850;
-  font-size: 21px;
+.logo-name {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: bold;
 }
 
-.brand-sub {
-  color: #81786c;
-  font-size: 12px;
-  margin-top: 2px;
+.logo-subtitle {
+    color: #92877a;
+    font-size: 11px;
+    margin-top: 3px;
 }
 
-.open-pill {
-  color: #52664b;
-  background: #e7eee2;
-  border: 1px solid #d6e2cf;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-weight: 700;
+.shop-status {
+    color: #667c5e;
+    font-size: 12px;
+    background: #e8eee3;
+    padding: 9px 14px;
+    border-radius: 20px;
 }
 
-/* Main layout */
+/* Welcome section */
 
-main {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 370px);
-  gap: 24px;
-  align-items: start;
+.welcome {
+    text-align: center;
+    margin-bottom: 35px;
 }
 
-.intro {
-  padding: 30px 6px 10px 4px;
-}
-
-.eyebrow {
-  color: var(--tomato-dark);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.7px;
-  text-transform: uppercase;
+.welcome-label {
+    color: #c65a42;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 h1 {
-  font-family: Georgia, serif;
-  font-size: clamp(38px, 5vw, 58px);
-  line-height: .99;
-  letter-spacing: -1.8px;
-  font-weight: 600;
-  margin: 14px 0 17px;
+    font-family: Georgia, serif;
+    font-size: clamp(38px, 6vw, 54px);
+    font-weight: normal;
+    margin: 13px 0;
+    letter-spacing: -1px;
 }
 
-.intro p {
-  color: #6f675d;
-  line-height: 1.7;
-  max-width: 440px;
-  font-size: 15px;
+.welcome p {
+    color: #847b70;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-/* Ingredient labels */
+/* Printer */
 
-.ingredient-note {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 28px;
+.printer {
+    width: 100%;
+    max-width: 430px;
+    background: #e7dfd2;
+    border-radius: 22px;
+    padding: 22px 22px 25px;
+    box-shadow: 0 12px 35px rgba(55, 43, 28, 0.09);
+    border: 1px solid #ddd3c5;
 }
 
-.ingredient {
-  background: rgba(255,253,248,.72);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 7px 11px;
-  color: #655d53;
-  font-size: 12px;
+.printer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
 }
 
-/* Receipt printer */
-
-.machine {
-  background: #fbf8f1;
-  border: 1px solid #e6ddcf;
-  border-radius: 24px;
-  padding: 20px;
-  box-shadow: 0 18px 50px rgba(56,43,28,.10);
+.printer-name {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: #81766a;
+    text-transform: uppercase;
 }
 
-.machine-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1px 2px 15px;
+.printer-light {
+    width: 9px;
+    height: 9px;
+    background: #83a477;
+    border-radius: 50%;
 }
 
-.machine-label {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-  color: #847a6c;
-  text-transform: uppercase;
-}
+/* Printer slot */
 
-.status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--green);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background: #83a477;
-  border-radius: 50%;
-}
-
-/* Display screen */
-
-.screen {
-  background: #303a31;
-  color: #f4f0df;
-  border-radius: 15px;
-  min-height: 100px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.screen-small {
-  color: #c1c9b7;
-  font-size: 10px;
-  letter-spacing: 1.3px;
-  text-transform: uppercase;
-}
-
-.screen-message {
-  font-family: Georgia, serif;
-  font-size: 22px;
-  margin-top: 8px;
-}
-
-.screen-hint {
-  color: #c1c9b7;
-  font-size: 11px;
-  margin-top: 5px;
-}
-
-.printer-slot {
-  width: 78%;
-  height: 8px;
-  background: #d5cbbb;
-  border-radius: 0 0 8px 8px;
-  margin: 0 auto 17px;
+.slot {
+    height: 12px;
+    background: #bdb3a5;
+    border-radius: 10px;
+    margin: 0 15px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.2);
 }
 
 /* Receipt */
 
-.receipt-wrap {
-  min-height: 258px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+.receipt-area {
+    padding: 0 10px;
+    min-height: 390px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .receipt {
-  width: min(100%, 300px);
-  background: var(--paper);
-  color: #302b25;
-  padding: 19px 20px 22px;
-  box-shadow: 0 8px 18px rgba(48,38,25,.10);
-  position: relative;
-  transform: translateY(-2px);
-  clip-path: polygon(
-    0 0,100% 0,100% 97%,96% 100%,92% 97%,
-    88% 100%,84% 97%,80% 100%,76% 97%,
-    72% 100%,68% 97%,64% 100%,60% 97%,
-    56% 100%,52% 97%,48% 100%,44% 97%,
-    40% 100%,36% 97%,32% 100%,28% 97%,
-    24% 100%,20% 97%,16% 100%,12% 97%,
-    8% 100%,4% 97%,0 100%
-  );
+    width: 100%;
+    max-width: 310px;
+    min-height: 355px;
+    background: #fffefa;
+    padding: 26px 25px 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    position: relative;
+    transform: translateY(-2px);
+
+    clip-path: polygon(
+        0 0, 100% 0, 100% 97%,
+        96% 100%, 92% 97%, 88% 100%,
+        84% 97%, 80% 100%, 76% 97%,
+        72% 100%, 68% 97%, 64% 100%,
+        60% 97%, 56% 100%, 52% 97%,
+        48% 100%, 44% 97%, 40% 100%,
+        36% 97%, 32% 100%, 28% 97%,
+        24% 100%, 20% 97%, 16% 100%,
+        12% 97%, 8% 100%, 4% 97%, 0 100%
+    );
 }
 
-.receipt.empty {
-  display: grid;
-  place-items: center;
-  min-height: 220px;
-  text-align: center;
-  color: #9b9184;
-  background: #f4f0e8;
-  border: 1px dashed #d8cfc1;
-  box-shadow: none;
-  clip-path: none;
+.receipt-placeholder {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #a39a8e;
 }
 
-.empty-icon {
-  font-size: 28px;
-  margin-bottom: 8px;
+.placeholder-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
 }
 
-.receipt-head {
-  text-align: center;
-  border-bottom: 1px dashed #cfc5b7;
-  padding-bottom: 12px;
+.placeholder-title {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: #6f6559;
+    margin-bottom: 8px;
+}
+
+.placeholder-text {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Printed receipt content */
+
+.receipt-header {
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed #cfc6b9;
 }
 
 .receipt-logo {
-  font-family: Georgia, serif;
-  font-size: 20px;
-  font-weight: bold;
+    font-family: Georgia, serif;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.receipt-kicker {
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  color: #887d70;
-  margin-top: 3px;
+.receipt-tagline {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #93887b;
+    margin-top: 5px;
 }
 
-.receipt-no {
-  display: flex;
-  justify-content: space-between;
-  margin: 12px 0;
-  font-size: 10px;
-  color: #766d62;
+.receipt-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #82786c;
+    margin: 15px 0;
+}
+
+.customer {
+    margin-bottom: 18px;
+}
+
+.small-heading {
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: #a09689;
+    margin-bottom: 7px;
+}
+
+.customer-name {
+    font-family: Georgia, serif;
+    font-size: 19px;
 }
 
 .order-name {
-  font-family: Georgia, serif;
-  font-size: 23px;
-  line-height: 1.1;
-  margin: 10px 0 5px;
+    font-family: Georgia, serif;
+    font-size: 25px;
+    line-height: 1.1;
+    margin: 8px 0;
 }
 
-.order-desc {
-  font-size: 11px;
-  color: #80766b;
-  line-height: 1.45;
+.order-description {
+    font-size: 11px;
+    color: #8c8175;
+    line-height: 1.5;
 }
 
-.section-label {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  color: #8a7e70;
-  margin: 16px 0 7px;
+.ingredients {
+    margin-top: 20px;
 }
 
-.items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 7px 0;
+    border-bottom: 1px dotted #e4ddd3;
 }
 
-.items li {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 12px;
-  padding: 4px 0;
-  border-bottom: 1px dotted #e7dfd4;
+.ingredient-amount {
+    color: #93887b;
 }
 
-.items li span:last-child {
-  color: #84796c;
-  white-space: nowrap;
-}
-
-.receipt-foot {
-  border-top: 1px dashed #cfc5b7;
-  margin-top: 14px;
-  padding-top: 10px;
-  text-align: center;
-  color: #84796c;
-  font-size: 10px;
-  line-height: 1.5;
+.receipt-bottom {
+    text-align: center;
+    font-size: 10px;
+    color: #93887b;
+    line-height: 1.6;
+    border-top: 1px dashed #cfc6b9;
+    margin-top: 20px;
+    padding-top: 13px;
 }
 
 /* Buttons */
 
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 button {
-  border: 0;
-  border-radius: 12px;
-  padding: 13px 14px;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 750;
-  cursor: pointer;
-  transition: .15s;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
 }
 
-button:active {
-  transform: translateY(1px) scale(.99);
+.new-order {
+    background: #d85d43;
+    color: white;
+    flex: 1;
 }
 
-.primary {
-  background: var(--tomato);
-  color: white;
-  flex: 1;
-  box-shadow: 0 5px 12px rgba(216,93,67,.19);
+.new-order:hover {
+    background: #b94732;
+    transform: translateY(-2px);
 }
 
-.primary:hover {
-  background: var(--tomato-dark);
+.copy-order {
+    background: #f8f4ed;
+    color: #655c51;
+    border: 1px solid #d9d0c4;
 }
 
-.secondary {
-  background: #eee8dd;
-  color: #5f574d;
-}
-
-.secondary:hover {
-  background: #e6ddcf;
+.copy-order:hover {
+    background: #eee7dc;
 }
 
 button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
+    opacity: .45;
+    cursor: not-allowed;
 }
 
 button:focus-visible {
-  outline: 3px solid #e6a18f;
-  outline-offset: 3px;
+    outline: 3px solid #dca08f;
+    outline-offset: 3px;
 }
 
-.machine-foot {
-  text-align: center;
-  color: #9a9083;
-  font-size: 10px;
-  margin-top: 14px;
+.message {
+    min-height: 20px;
+    text-align: center;
+    color: #71866a;
+    font-size: 11px;
+    margin-top: 12px;
 }
 
-.toast {
-  min-height: 17px;
-  text-align: center;
-  color: var(--green);
-  font-size: 11px;
-  margin-top: 8px;
+/* Receipt animation */
+
+.print-animation {
+    animation: printReceipt .55s ease-out;
 }
 
-/* Printing animation */
+@keyframes printReceipt {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
 
-.print-pop {
-  animation: printIn .55s ease;
+    to {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
 }
 
-@keyframes printIn {
-  from {
-    opacity: 0;
-    transform: translateY(-24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
+/* Footer */
+
+footer {
+    text-align: center;
+    color: #a09689;
+    font-size: 11px;
+    margin-top: 30px;
+    line-height: 1.7;
 }
 
-/* Mobile layout */
+/* Mobile */
 
-@media(max-width:760px) {
-  main {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
+@media(max-width: 500px) {
+    body {
+        padding: 25px 14px;
+    }
 
-  .intro {
-    padding: 12px 3px 0;
-  }
+    header {
+        margin-bottom: 45px;
+    }
 
-  .ingredient-note {
-    margin-top: 18px;
-  }
+    .printer {
+        padding: 17px 12px 20px;
+    }
 
-  .machine {
-    max-width: 460px;
-    width: 100%;
-    margin: 0 auto;
-  }
+    .receipt-area {
+        padding: 0 5px;
+    }
 
-  header {
-    margin-bottom: 15px;
-  }
+    .receipt {
+        padding: 23px 19px 30px;
+    }
+
+    .shop-status {
+        font-size: 10px;
+    }
+}
+
+/* Print only the receipt */
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    header, .welcome, .printer-top, .slot,
+    .buttons, .message, footer {
+        display: none !important;
+    }
+
+    .printer {
+        background: white;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .receipt-area {
+        min-height: auto;
+    }
+
+    .receipt {
+        box-shadow: none;
+        clip-path: none;
+    }
 }
 </style>
 </head>
 
 <body>
-<div class="page">
 
 <header>
-  <div class="brand">
-    <div class="brand-mark">🍕</div>
-    <div>
-      <div class="brand-name">WildSlice</div>
-      <div class="brand-sub">Fresh orders, straight from the kitchen</div>
+    <div class="logo">
+        <div class="logo-icon">🍕</div>
+        <div>
+            <div class="logo-name">WildSlice</div>
+            <div class="logo-subtitle">A little pizza shop with big flavour</div>
+        </div>
     </div>
-  </div>
-  <div class="open-pill">● Order window open</div>
+
+    <div class="shop-status">● Kitchen is open</div>
 </header>
 
-<main>
+<section class="welcome">
+    <div class="welcome-label">Welcome to WildSlice</div>
 
-<section class="intro">
-  <div class="eyebrow">The little pizza shop</div>
+    <h1>What's cooking today?</h1>
 
-  <h1>Every slice<br>starts somewhere.</h1>
-
-  <p>
-    Welcome to the WildSlice order printer.
-    Pick up a new customer order, check the ingredients,
-    and get cooking. Every receipt is a little different.
-  </p>
-
-  <div class="ingredient-note">
-    <span class="ingredient">🍅 Tomato</span>
-    <span class="ingredient">🌿 Basil</span>
-    <span class="ingredient">🍄 Mushroom</span>
-    <span class="ingredient">🌾 Wheat</span>
-    <span class="ingredient">🧀 Cheese</span>
-    <span class="ingredient">🍖 Pepperoni</span>
-  </div>
+    <p>
+        Every customer has a different craving.
+        Print a receipt to find out what they're ordering!
+    </p>
 </section>
 
-<section class="machine">
+<section class="printer">
 
-  <div class="machine-top">
-    <span class="machine-label">Order printer · No. 01</span>
-    <span class="status"><span class="dot"></span> Ready</span>
-  </div>
-
-  <div class="screen" aria-live="polite">
-    <div class="screen-small">WildSlice kitchen display</div>
-    <div class="screen-message" id="screenMessage">
-      Ready for an order?
+    <div class="printer-top">
+        <div class="printer-name">Customer order printer</div>
+        <div class="printer-light"></div>
     </div>
-    <div class="screen-hint" id="screenHint">
-      Press the button to print your first receipt.
+
+    <div class="slot"></div>
+
+    <div class="receipt-area">
+
+        <div class="receipt" id="receipt">
+
+            <div class="receipt-placeholder">
+                <div class="placeholder-icon">🧾</div>
+
+                <div class="placeholder-title">
+                    Waiting for an order
+                </div>
+
+                <div class="placeholder-text">
+                    Your customer's receipt<br>
+                    will appear here.
+                </div>
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <div class="printer-slot"></div>
+    <div class="buttons">
 
-  <div class="receipt-wrap">
-    <article class="receipt empty" id="receipt">
-      <div>
-        <div class="empty-icon">🧾</div>
-        <div style="font-family:Georgia,serif;font-size:18px;color:#756b60">
-          Your next order goes here
-        </div>
-        <div style="font-size:11px;margin-top:7px">
-          A fresh receipt is waiting to be printed.
-        </div>
-      </div>
-    </article>
-  </div>
+        <button class="new-order" id="newOrder">
+            Get New Order →
+        </button>
 
-  <div class="actions">
-    <button class="primary" id="printButton">
-      Print a receipt →
-    </button>
-    <button class="secondary" id="copyButton" disabled>
-      Copy
-    </button>
-  </div>
+        <button class="copy-order" id="copyOrder" disabled>
+            Copy
+        </button>
 
-  <div class="toast" id="toast" aria-live="polite"></div>
+    </div>
 
-  <div class="machine-foot">
-    Just receipts. No scores, inventory, or player tracking.
-  </div>
+    <div class="message" id="message"></div>
 
 </section>
-</main>
-</div>
+
+<footer>
+    Made fresh at WildSlice 🍅<br>
+    Your next pizza adventure starts here.
+</footer>
 
 <script>
 
-// All orders use only ingredients available in the game.
-// Wheat is used for the pizza crust.
+// Customer names used for randomized receipts.
+
+const customers = [
+    "Oliver",
+    "Emma",
+    "Noah",
+    "Sophia",
+    "Liam",
+    "Ava",
+    "Ethan",
+    "Mia",
+    "Lucas",
+    "Isabella",
+    "James",
+    "Amelia"
+];
+
+// All recipes use ingredients available in the board game.
+// Wheat is the pizza crust.
 
 const orders = [
 
-{
-  name: "The Garden Party",
-  note: "A bright, fresh favourite from the regulars.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 2],
-    ["Basil", 1],
-    ["Cheese", 1]
-  ]
-},
+    {
+        name: "The Garden Party",
+        description: "A fresh and colourful pizza straight from the garden.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 2],
+            ["Basil", 1],
+            ["Cheese", 1]
+        ]
+    },
 
-{
-  name: "Mushroom Meadow",
-  note: "Earthy, cozy, and extra cheesy.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Mushroom", 2],
-    ["Cheese", 2],
-    ["Basil", 1]
-  ]
-},
+    {
+        name: "Mushroom Meadow",
+        description: "A cozy mushroom pizza with plenty of cheese.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Mushroom", 2],
+            ["Cheese", 2],
+            ["Basil", 1]
+        ]
+    },
 
-{
-  name: "The Classic Slice",
-  note: "Sometimes the original is all you need.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 2],
-    ["Cheese", 2],
-    ["Pepperoni", 1]
-  ]
-},
+    {
+        name: "The Classic Slice",
+        description: "A timeless favourite. Simple, cheesy, and delicious.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 2],
+            ["Cheese", 2],
+            ["Pepperoni", 1]
+        ]
+    },
 
-{
-  name: "Forest Floor",
-  note: "A little woodland inspiration for lunch.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Mushroom", 2],
-    ["Tomato", 1],
-    ["Basil", 1]
-  ]
-},
+    {
+        name: "Forest Floor",
+        description: "A woodland-inspired pizza with fresh garden toppings.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Mushroom", 2],
+            ["Tomato", 1],
+            ["Basil", 1]
+        ]
+    },
 
-{
-  name: "Pepperoni Picnic",
-  note: "A hearty slice made for a hungry customer.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 1],
-    ["Cheese", 1],
-    ["Pepperoni", 2]
-  ]
-},
+    {
+        name: "Pepperoni Picnic",
+        description: "A hearty pizza for someone with a big appetite.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 1],
+            ["Cheese", 1],
+            ["Pepperoni", 2]
+        ]
+    },
 
-{
-  name: "The Greenhouse",
-  note: "Fresh from the garden, with a cheesy finish.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 1],
-    ["Basil", 2],
-    ["Mushroom", 1],
-    ["Cheese", 1]
-  ]
-},
+    {
+        name: "The Greenhouse",
+        description: "Fresh garden ingredients with a cheesy finish.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 1],
+            ["Basil", 2],
+            ["Mushroom", 1],
+            ["Cheese", 1]
+        ]
+    },
 
-{
-  name: "Sunset Special",
-  note: "A rich, savoury order with a little kick.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 2],
-    ["Pepperoni", 2],
-    ["Cheese", 1]
-  ]
-},
+    {
+        name: "Sunset Special",
+        description: "A savoury customer favourite with extra pepperoni.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 2],
+            ["Pepperoni", 2],
+            ["Cheese", 1]
+        ]
+    },
 
-{
-  name: "Forest & Flame",
-  note: "Mushrooms meet pepperoni in this shop special.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Mushroom", 1],
-    ["Pepperoni", 1],
-    ["Tomato", 1],
-    ["Cheese", 1]
-  ]
-},
+    {
+        name: "Forest & Flame",
+        description: "Mushrooms and pepperoni make an unexpected pair.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Mushroom", 1],
+            ["Pepperoni", 1],
+            ["Tomato", 1],
+            ["Cheese", 1]
+        ]
+    },
 
-{
-  name: "Basil Breeze",
-  note: "A simple, fragrant order with garden-fresh flavour.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Basil", 2],
-    ["Tomato", 2],
-    ["Cheese", 1]
-  ]
-},
+    {
+        name: "Basil Breeze",
+        description: "A light and fragrant pizza with fresh basil.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Basil", 2],
+            ["Tomato", 2],
+            ["Cheese", 1]
+        ]
+    },
 
-{
-  name: "The Farmer's Favourite",
-  note: "A little bit of everything from the farm.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 1],
-    ["Basil", 1],
-    ["Mushroom", 1],
-    ["Cheese", 1],
-    ["Pepperoni", 1]
-  ]
-},
+    {
+        name: "Farmer's Favourite",
+        description: "A little bit of everything from the farm.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 1],
+            ["Basil", 1],
+            ["Mushroom", 1],
+            ["Cheese", 1],
+            ["Pepperoni", 1]
+        ]
+    },
 
-{
-  name: "Double Mushroom Melt",
-  note: "For the customer who really loves mushrooms.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Mushroom", 3],
-    ["Cheese", 2],
-    ["Tomato", 1]
-  ]
-},
+    {
+        name: "Double Mushroom Melt",
+        description: "A cheesy treat for serious mushroom lovers.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Mushroom", 3],
+            ["Cheese", 2],
+            ["Tomato", 1]
+        ]
+    },
 
-{
-  name: "Market Day",
-  note: "A colourful mix inspired by the morning market.",
-  ingredients: [
-    ["Wheat crust", 1],
-    ["Tomato", 2],
-    ["Basil", 1],
-    ["Pepperoni", 1],
-    ["Cheese", 1]
-  ]
-}
+    {
+        name: "Market Day",
+        description: "A colourful combination inspired by the local market.",
+        ingredients: [
+            ["Wheat crust", 1],
+            ["Tomato", 2],
+            ["Basil", 1],
+            ["Pepperoni", 1],
+            ["Cheese", 1]
+        ]
+    }
 
 ];
 
-// Basic receipt display information only.
-// Nothing is saved or connected to player data.
+// Temporary display information only.
+// Nothing is saved to a database or linked to a player.
 
-let lastIndex = -1;
+let previousOrder = -1;
 let orderNumber = 1;
-let currentText = "";
+let receiptText = "";
 
-const receipt = document.getElementById("receipt");
-const copyButton = document.getElementById("copyButton");
-const screenMessage = document.getElementById("screenMessage");
-const screenHint = document.getElementById("screenHint");
-const toast = document.getElementById("toast");
+// Select a random order.
+// Avoid repeating the previous pizza when possible.
 
-// Pick a random order.
-// Avoid repeating the same order twice in a row.
+function getRandomOrder() {
 
-function nextOrder() {
+    let index = Math.floor(Math.random() * orders.length);
 
-  let index = Math.floor(Math.random() * orders.length);
-
-  if (orders.length > 1) {
-    while (index === lastIndex) {
-      index = Math.floor(Math.random() * orders.length);
+    while (
+        orders.length > 1 &&
+        index === previousOrder
+    ) {
+        index = Math.floor(Math.random() * orders.length);
     }
-  }
 
-  lastIndex = index;
+    previousOrder = index;
 
-  return orders[index];
+    return orders[index];
 }
 
-// Print a new receipt.
+// Select a random customer.
 
-function printReceipt() {
+function getRandomCustomer() {
 
-  const order = nextOrder();
+    const index = Math.floor(
+        Math.random() * customers.length
+    );
 
-  const number = String(orderNumber++)
-    .padStart(3, "0");
-
-  // Create the ingredient list.
-
-  const rows = order.ingredients.map(([name, amount]) =>
-    `<li>
-      <span>${name}</span>
-      <span>× ${amount}</span>
-    </li>`
-  ).join("");
-
-  // Display the receipt.
-
-  receipt.className = "receipt print-pop";
-
-  receipt.innerHTML = `
-    <div class="receipt-head">
-      <div class="receipt-logo">WildSlice 🍕</div>
-      <div class="receipt-kicker">
-        MADE FRESH, MADE WITH CARE
-      </div>
-    </div>
-
-    <div class="receipt-no">
-      <span>ORDER #${number}</span>
-      <span>TAKEAWAY</span>
-    </div>
-
-    <div class="section-label">CUSTOMER ORDER</div>
-
-    <div class="order-name">${order.name}</div>
-
-    <div class="order-desc">${order.note}</div>
-
-    <div class="section-label">WHAT GOES ON IT</div>
-
-    <ul class="items">
-      ${rows}
-    </ul>
-
-    <div class="receipt-foot">
-      One delicious pizza, coming up!<br>
-      Thank you for choosing WildSlice.
-    </div>
-  `;
-
-  // Prepare text for the optional Copy button.
-
-  currentText =
-    `WILDSLICE — ORDER #${number}\n` +
-    `${order.name}\n` +
-    `${order.note}\n\n` +
-    `INGREDIENTS\n` +
-    order.ingredients.map(([name, amount]) =>
-      `${name} x ${amount}`
-    ).join("\n");
-
-  // Update the machine screen.
-
-  screenMessage.textContent = "Order received!";
-
-  screenHint.textContent =
-    `${order.name} · Receipt #${number} is ready.`;
-
-  copyButton.disabled = false;
-
-  toast.textContent = "Fresh receipt printed.";
-
-  // Restart the receipt animation.
-
-  void receipt.offsetWidth;
+    return customers[index];
 }
 
-// Print button.
+// Generate and display a receipt.
 
-document
-  .getElementById("printButton")
-  .addEventListener("click", printReceipt);
+function generateReceipt() {
 
-// Copy button.
+    const order = getRandomOrder();
+    const customer = getRandomCustomer();
 
-copyButton.addEventListener("click", async () => {
+    const number = String(orderNumber++)
+        .padStart(3, "0");
 
-  if (!currentText) return;
+    // Create the ingredient rows.
 
-  try {
+    const ingredientHTML = order.ingredients.map(
+        ([ingredient, amount]) => {
 
-    await navigator.clipboard.writeText(currentText);
+            return `
+                <div class="ingredient-row">
+                    <span>${ingredient}</span>
+                    <span class="ingredient-amount">× ${amount}</span>
+                </div>
+            `;
 
-    toast.textContent = "Receipt details copied.";
+        }
+    ).join("");
 
-  } catch {
+    // Build the receipt.
 
-    toast.textContent =
-      "Copy isn't available in this browser.";
+    const receipt = document.getElementById("receipt");
 
-  }
+    receipt.className = "receipt print-animation";
 
-});
+    receipt.innerHTML = `
+
+        <div class="receipt-header">
+
+            <div class="receipt-logo">
+                WildSlice 🍕
+            </div>
+
+            <div class="receipt-tagline">
+                FRESHLY MADE, ALWAYS DELICIOUS
+            </div>
+
+        </div>
+
+        <div class="receipt-info">
+            <span>ORDER #${number}</span>
+            <span>TAKEAWAY</span>
+        </div>
+
+        <div class="customer">
+
+            <div class="small-heading">
+                CUSTOMER
+            </div>
+
+            <div class="customer-name">
+                ${customer}
+            </div>
+
+        </div>
+
+        <div class="small-heading">
+            CUSTOMER'S ORDER
+        </div>
+
+        <div class="order-name">
+            ${order.name}
+        </div>
+
+        <div class="order-description">
+            ${order.description}
+        </div>
+
+        <div class="ingredients">
+
+            <div class="small-heading">
+                INGREDIENTS REQUIRED
+            </div>
+
+            ${ingredientHTML}
+
+        </div>
+
+        <div class="receipt-bottom">
+            Thank you for choosing WildSlice!<br>
+            Your pizza is made with care.
+        </div>
+
+    `;
+
+    // Prepare the text for the Copy button.
+
+    receiptText =
+        `WILDSLICE — ORDER #${number}\n` +
+        `Customer: ${customer}\n` +
+        `${order.name}\n` +
+        `${order.description}\n\n` +
+        `INGREDIENTS:\n` +
+        order.ingredients.map(
+            ([name, amount]) => `${name} x ${amount}`
+        ).join("\n");
+
+    document.getElementById("copyOrder").disabled = false;
+
+    document.getElementById("message").textContent =
+        "Your new customer order is ready!";
+
+    // Restart the printing animation.
+
+    void receipt.offsetWidth;
+}
+
+// New order button.
+
+document.getElementById("newOrder")
+    .addEventListener("click", generateReceipt);
+
+// Copy receipt button.
+
+document.getElementById("copyOrder")
+    .addEventListener("click", async () => {
+
+        if (!receiptText) return;
+
+        try {
+
+            await navigator.clipboard.writeText(receiptText);
+
+            document.getElementById("message").textContent =
+                "Receipt copied successfully!";
+
+        } catch {
+
+            document.getElementById("message").textContent =
+                "Copy is unavailable in this browser.";
+
+        }
+
+    });
 
 </script>
 
