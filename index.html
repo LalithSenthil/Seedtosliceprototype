@@ -4,814 +4,836 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WildSlice - Digital Order Machine</title>
+<title>WildSlice — Order Printer</title>
 
 <style>
 :root {
-    --ink: #25211e;
-    --cream: #fff8e9;
-    --tomato: #df4b35;
-    --green: #4e8158;
-    --gold: #f2b84b;
-    --line: #e5d8c1;
+  --ink: #29251f;
+  --cream: #f4efe5;
+  --paper: #fffdf8;
+  --tomato: #d85d43;
+  --tomato-dark: #b94732;
+  --green: #71866a;
+  --line: #e7dfd2;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: #f5eddf;
-    color: var(--ink);
-    font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(216,93,67,.08), transparent 26rem),
+    radial-gradient(circle at 90% 85%, rgba(113,134,106,.10), transparent 24rem),
+    var(--cream);
+  color: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
 }
+
+.page {
+  width: min(100%, 980px);
+}
+
+/* Header */
 
 header {
-    padding: 22px 5%;
-    background: #fffaf0;
-    border-bottom: 1px solid var(--line);
-    font-size: 25px;
-    font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 25px;
 }
 
-header span {
-    color: var(--tomato);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.brand-mark {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: #f9dfd5;
+  border-radius: 14px;
+  font-size: 23px;
+  transform: rotate(-5deg);
+}
+
+.brand-name {
+  font-weight: 850;
+  font-size: 21px;
+}
+
+.brand-sub {
+  color: #81786c;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.open-pill {
+  color: #52664b;
+  background: #e7eee2;
+  border: 1px solid #d6e2cf;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Main layout */
 
 main {
-    max-width: 1100px;
-    margin: 35px auto;
-    padding: 0 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 370px);
+  gap: 24px;
+  align-items: start;
+}
+
+.intro {
+  padding: 30px 6px 10px 4px;
+}
+
+.eyebrow {
+  color: var(--tomato-dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
 }
 
 h1 {
-    font-size: 42px;
-    margin-bottom: 8px;
+  font-family: Georgia, serif;
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: .99;
+  letter-spacing: -1.8px;
+  font-weight: 600;
+  margin: 14px 0 17px;
 }
 
-.subtitle {
-    color: #81786d;
-    margin-bottom: 25px;
+.intro p {
+  color: #6f675d;
+  line-height: 1.7;
+  max-width: 440px;
+  font-size: 15px;
 }
 
-.layout {
-    display: grid;
-    grid-template-columns: 1.3fr 0.8fr;
-    gap: 20px;
-}
+/* Ingredient labels */
 
-/* DIGITAL MACHINE */
-
-.machine {
-    background: #292724;
-    color: white;
-    border-radius: 25px;
-    padding: 22px;
-}
-
-.machine-title {
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-}
-
-.screen {
-    background: #dce9d4;
-    color: #27382a;
-    border: 8px solid #171615;
-    border-radius: 15px;
-    padding: 25px;
-    min-height: 240px;
-}
-
-.screen h2 {
-    font-size: 27px;
-}
-
-.chip {
-    display: inline-block;
-    background: #c5d8bc;
-    padding: 8px;
-    border-radius: 7px;
-    font-size: 11px;
-    margin: 5px 3px;
-    font-weight: bold;
-}
-
-/* RECEIPT */
-
-.receipt {
-    background: #fffaf0;
-    color: #302923;
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    display: none;
-    animation: print 0.6s ease;
-}
-
-.receipt.show {
-    display: block;
-}
-
-@keyframes print {
-    from {
-        transform: translateY(-40px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.receipt-header {
-    text-align: center;
-    border-bottom: 1px dashed gray;
-    padding-bottom: 12px;
-}
-
-.receipt-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 12px 0;
-    font-size: 13px;
-}
-
-/* BUTTONS */
-
-button {
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    padding: 13px 18px;
-    font-weight: bold;
-}
-
-.primary {
-    background: var(--tomato);
-    color: white;
-}
-
-.secondary {
-    background: #f4e6c9;
-    color: #302923;
-}
-
-.machine-controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* PLAYER PANEL */
-
-.panel {
-    background: #fffaf1;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.money {
-    color: var(--green);
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.receipts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.receipt-card {
-    border: 1px solid var(--line);
-    background: white;
-    padding: 12px;
-    text-align: left;
-}
-
-.receipt-card.active {
-    border: 2px solid var(--tomato);
-    background: #fff1e9;
-}
-
-/* INGREDIENTS */
-
-.active-order {
-    margin-top: 22px;
+.ingredient-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
 }
 
 .ingredient {
-    background: #f8f1e5;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 9px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
+  background: rgba(255,253,248,.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 11px;
+  color: #655d53;
+  font-size: 12px;
 }
 
-.ingredient.done {
-    background: #e9f1e4;
+/* Receipt printer */
+
+.machine {
+  background: #fbf8f1;
+  border: 1px solid #e6ddcf;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 18px 50px rgba(56,43,28,.10);
 }
 
-.progress {
-    background: #eee4d4;
-    height: 8px;
-    border-radius: 10px;
-    margin: 15px 0;
-    overflow: hidden;
+.machine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1px 2px 15px;
 }
 
-.progress div {
-    background: var(--green);
-    height: 100%;
-    width: 0%;
+.machine-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: #847a6c;
+  text-transform: uppercase;
 }
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #83a477;
+  border-radius: 50%;
+}
+
+/* Display screen */
+
+.screen {
+  background: #303a31;
+  color: #f4f0df;
+  border-radius: 15px;
+  min-height: 100px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.screen-small {
+  color: #c1c9b7;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.screen-message {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  margin-top: 8px;
+}
+
+.screen-hint {
+  color: #c1c9b7;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.printer-slot {
+  width: 78%;
+  height: 8px;
+  background: #d5cbbb;
+  border-radius: 0 0 8px 8px;
+  margin: 0 auto 17px;
+}
+
+/* Receipt */
+
+.receipt-wrap {
+  min-height: 258px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.receipt {
+  width: min(100%, 300px);
+  background: var(--paper);
+  color: #302b25;
+  padding: 19px 20px 22px;
+  box-shadow: 0 8px 18px rgba(48,38,25,.10);
+  position: relative;
+  transform: translateY(-2px);
+  clip-path: polygon(
+    0 0,100% 0,100% 97%,96% 100%,92% 97%,
+    88% 100%,84% 97%,80% 100%,76% 97%,
+    72% 100%,68% 97%,64% 100%,60% 97%,
+    56% 100%,52% 97%,48% 100%,44% 97%,
+    40% 100%,36% 97%,32% 100%,28% 97%,
+    24% 100%,20% 97%,16% 100%,12% 97%,
+    8% 100%,4% 97%,0 100%
+  );
+}
+
+.receipt.empty {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  text-align: center;
+  color: #9b9184;
+  background: #f4f0e8;
+  border: 1px dashed #d8cfc1;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.empty-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.receipt-head {
+  text-align: center;
+  border-bottom: 1px dashed #cfc5b7;
+  padding-bottom: 12px;
+}
+
+.receipt-logo {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.receipt-kicker {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #887d70;
+  margin-top: 3px;
+}
+
+.receipt-no {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 10px;
+  color: #766d62;
+}
+
+.order-name {
+  font-family: Georgia, serif;
+  font-size: 23px;
+  line-height: 1.1;
+  margin: 10px 0 5px;
+}
+
+.order-desc {
+  font-size: 11px;
+  color: #80766b;
+  line-height: 1.45;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #8a7e70;
+  margin: 16px 0 7px;
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dotted #e7dfd4;
+}
+
+.items li span:last-child {
+  color: #84796c;
+  white-space: nowrap;
+}
+
+.receipt-foot {
+  border-top: 1px dashed #cfc5b7;
+  margin-top: 14px;
+  padding-top: 10px;
+  text-align: center;
+  color: #84796c;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Buttons */
 
 .actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.actions button {
-    flex: 1;
-    background: #fffdf8;
-    border: 1px solid var(--line);
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: .15s;
 }
 
-.market {
-    margin-top: 22px;
+button:active {
+  transform: translateY(1px) scale(.99);
 }
 
-.market-item {
-    background: #fffdf8;
-    border: 1px solid var(--line);
-    padding: 12px;
-    margin: 8px 0;
+.primary {
+  background: var(--tomato);
+  color: white;
+  flex: 1;
+  box-shadow: 0 5px 12px rgba(216,93,67,.19);
 }
 
-.market-item button {
-    float: right;
-    background: #292724;
-    color: white;
+.primary:hover {
+  background: var(--tomato-dark);
 }
 
-@media(max-width: 750px) {
-    .layout {
-        grid-template-columns: 1fr;
-    }
+.secondary {
+  background: #eee8dd;
+  color: #5f574d;
+}
+
+.secondary:hover {
+  background: #e6ddcf;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+button:focus-visible {
+  outline: 3px solid #e6a18f;
+  outline-offset: 3px;
+}
+
+.machine-foot {
+  text-align: center;
+  color: #9a9083;
+  font-size: 10px;
+  margin-top: 14px;
+}
+
+.toast {
+  min-height: 17px;
+  text-align: center;
+  color: var(--green);
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+/* Printing animation */
+
+.print-pop {
+  animation: printIn .55s ease;
+}
+
+@keyframes printIn {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* Mobile layout */
+
+@media(max-width:760px) {
+  main {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .intro {
+    padding: 12px 3px 0;
+  }
+
+  .ingredient-note {
+    margin-top: 18px;
+  }
+
+  .machine {
+    max-width: 460px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 15px;
+  }
 }
 </style>
 </head>
 
 <body>
+<div class="page">
 
 <header>
-    WILD<span>SLICE</span> ✳
+  <div class="brand">
+    <div class="brand-mark">🍕</div>
+    <div>
+      <div class="brand-name">WildSlice</div>
+      <div class="brand-sub">Fresh orders, straight from the kitchen</div>
+    </div>
+  </div>
+  <div class="open-pill">● Order window open</div>
 </header>
 
 <main>
 
-    <h1>Your next order starts here.</h1>
-    <p class="subtitle">
-        Farm ingredients, make pizzas, and build your business!
-    </p>
+<section class="intro">
+  <div class="eyebrow">The little pizza shop</div>
 
-    <div class="layout">
+  <h1>Every slice<br>starts somewhere.</h1>
 
-        <!-- DIGITAL MACHINE -->
+  <p>
+    Welcome to the WildSlice order printer.
+    Pick up a new customer order, check the ingredients,
+    and get cooking. Every receipt is a little different.
+  </p>
 
-        <section class="machine">
+  <div class="ingredient-note">
+    <span class="ingredient">🍅 Tomato</span>
+    <span class="ingredient">🌿 Basil</span>
+    <span class="ingredient">🍄 Mushroom</span>
+    <span class="ingredient">🌾 Wheat</span>
+    <span class="ingredient">🧀 Cheese</span>
+    <span class="ingredient">🍖 Pepperoni</span>
+  </div>
+</section>
 
-            <div class="machine-title">
-                🟢 WILDSLICE ORDER TERMINAL
-            </div>
+<section class="machine">
 
-            <div class="screen">
+  <div class="machine-top">
+    <span class="machine-label">Order printer · No. 01</span>
+    <span class="status"><span class="dot"></span> Ready</span>
+  </div>
 
-                <small>WELCOME, PIZZA ENTREPRENEUR</small>
-
-                <h2 id="screenTitle">
-                    Ready for your first order?
-                </h2>
-
-                <p id="screenText">
-                    Press the button below to print your receipt.
-                </p>
-
-                <br>
-
-                <span class="chip">3 ACTIONS / TURN</span>
-                <span class="chip">4 STARTING RECEIPTS</span>
-                <span class="chip">6 DELIVERIES TO WIN</span>
-
-            </div>
-
-            <!-- PRINTED RECEIPT -->
-
-            <div class="receipt" id="receipt">
-
-                <div class="receipt-header">
-                    <h3>WILD SLICE PIZZA</h3>
-                    <small>FRESH FROM THE FARM</small>
-                </div>
-
-                <div class="receipt-row">
-                    <span>ORDER NUMBER</span>
-                    <b id="rNumber">001</b>
-                </div>
-
-                <div class="receipt-row">
-                    <span>ORDER NAME</span>
-                    <b id="rName">Garden Classic</b>
-                </div>
-
-                <div id="rItems"></div>
-
-                <hr>
-
-                <div class="receipt-row">
-                    <span>COMPLETION PAY</span>
-                    <b id="rPay">$8</b>
-                </div>
-
-                <div class="receipt-row">
-                    <span>DELIVERY BONUS</span>
-                    <b id="rBonus">$8</b>
-                </div>
-
-                <center>
-                    <small>THANK YOU • MAKE IT WILD!</small>
-                </center>
-
-            </div>
-
-            <div class="machine-controls">
-
-                <button class="primary" onclick="printOrder()">
-                    ▣ GET MY ORDER
-                </button>
-
-                <button class="secondary" onclick="speakOrder()">
-                    🔊 Voice
-                </button>
-
-            </div>
-
-        </section>
-
-        <!-- PLAYER INFORMATION -->
-
-        <aside class="panel">
-
-            <h3>Your Business</h3>
-
-            <small>AVAILABLE CASH</small>
-
-            <div class="money" id="cash">$20</div>
-
-            <hr>
-
-            <h3>Your Receipts</h3>
-
-            <div class="receipts" id="receiptChoices"></div>
-
-            <p>
-                You can only work on one order at a time.
-            </p>
-
-        </aside>
-
+  <div class="screen" aria-live="polite">
+    <div class="screen-small">WildSlice kitchen display</div>
+    <div class="screen-message" id="screenMessage">
+      Ready for an order?
     </div>
+    <div class="screen-hint" id="screenHint">
+      Press the button to print your first receipt.
+    </div>
+  </div>
 
-    <!-- ACTIVE ORDER -->
+  <div class="printer-slot"></div>
 
-    <section class="panel active-order">
-
-        <h3 id="activeTitle">Your Active Order</h3>
-
-        <div class="progress">
-            <div id="progressBar"></div>
+  <div class="receipt-wrap">
+    <article class="receipt empty" id="receipt">
+      <div>
+        <div class="empty-icon">🧾</div>
+        <div style="font-family:Georgia,serif;font-size:18px;color:#756b60">
+          Your next order goes here
         </div>
-
-        <div id="ingredientList">
-            Print a receipt to begin.
+        <div style="font-size:11px;margin-top:7px">
+          A fresh receipt is waiting to be printed.
         </div>
+      </div>
+    </article>
+  </div>
 
-        <div class="actions">
+  <div class="actions">
+    <button class="primary" id="printButton">
+      Print a receipt →
+    </button>
+    <button class="secondary" id="copyButton" disabled>
+      Copy
+    </button>
+  </div>
 
-            <button onclick="harvest()" id="harvestBtn" disabled>
-                🌱 Harvest
-            </button>
+  <div class="toast" id="toast" aria-live="polite"></div>
 
-            <button onclick="makePizza()" id="makeBtn" disabled>
-                🍕 Make Pizza
-            </button>
+  <div class="machine-foot">
+    Just receipts. No scores, inventory, or player tracking.
+  </div>
 
-            <button onclick="nextTurn()" id="nextBtn" disabled>
-                ⏭ End Turn
-            </button>
-
-        </div>
-
-        <p>
-            Tomatoes and basil grow in one turn.
-            Mushrooms and wheat take two turns.
-        </p>
-
-    </section>
-
-    <!-- MARKET -->
-
-    <section class="panel market">
-
-        <h3>Farm & Supply Market</h3>
-
-        <div id="marketGrid"></div>
-
-    </section>
-
+</section>
 </main>
+</div>
 
 <script>
 
-// AVAILABLE ORDERS
+// All orders use only ingredients available in the game.
+// Wheat is used for the pizza crust.
 
 const orders = [
 
-    {
-        name: "Garden Classic",
-        items: [
-            ["Tomato Sauce", "Tomatoes", 1],
-            ["Fresh Basil", "Basil", 1]
-        ],
-        pay: 8,
-        bonus: 8
-    },
+{
+  name: "The Garden Party",
+  note: "A bright, fresh favourite from the regulars.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 2],
+    ["Basil", 1],
+    ["Cheese", 1]
+  ]
+},
 
-    {
-        name: "Mushroom Meadow",
-        items: [
-            ["Tomato Sauce", "Tomatoes", 1],
-            ["Mushrooms", "Mushrooms", 2],
-            ["Fresh Basil", "Basil", 1]
-        ],
-        pay: 12,
-        bonus: 10
-    },
+{
+  name: "Mushroom Meadow",
+  note: "Earthy, cozy, and extra cheesy.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Mushroom", 2],
+    ["Cheese", 2],
+    ["Basil", 1]
+  ]
+},
 
-    {
-        name: "Pepperoni Party",
-        items: [
-            ["Tomato Sauce", "Tomatoes", 1],
-            ["Pepperoni", "Pepperoni", 0],
-            ["Cheese", "Cheese", 0]
-        ],
-        pay: 14,
-        bonus: 12
-    },
+{
+  name: "The Classic Slice",
+  note: "Sometimes the original is all you need.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 2],
+    ["Cheese", 2],
+    ["Pepperoni", 1]
+  ]
+},
 
-    {
-        name: "Harvest Special",
-        items: [
-            ["Wheat Dough", "Wheat", 2],
-            ["Mushrooms", "Mushrooms", 2],
-            ["Fresh Basil", "Basil", 1],
-            ["Cheese", "Cheese", 0]
-        ],
-        pay: 18,
-        bonus: 15
-    }
+{
+  name: "Forest Floor",
+  note: "A little woodland inspiration for lunch.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Mushroom", 2],
+    ["Tomato", 1],
+    ["Basil", 1]
+  ]
+},
+
+{
+  name: "Pepperoni Picnic",
+  note: "A hearty slice made for a hungry customer.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 1],
+    ["Cheese", 1],
+    ["Pepperoni", 2]
+  ]
+},
+
+{
+  name: "The Greenhouse",
+  note: "Fresh from the garden, with a cheesy finish.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 1],
+    ["Basil", 2],
+    ["Mushroom", 1],
+    ["Cheese", 1]
+  ]
+},
+
+{
+  name: "Sunset Special",
+  note: "A rich, savoury order with a little kick.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 2],
+    ["Pepperoni", 2],
+    ["Cheese", 1]
+  ]
+},
+
+{
+  name: "Forest & Flame",
+  note: "Mushrooms meet pepperoni in this shop special.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Mushroom", 1],
+    ["Pepperoni", 1],
+    ["Tomato", 1],
+    ["Cheese", 1]
+  ]
+},
+
+{
+  name: "Basil Breeze",
+  note: "A simple, fragrant order with garden-fresh flavour.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Basil", 2],
+    ["Tomato", 2],
+    ["Cheese", 1]
+  ]
+},
+
+{
+  name: "The Farmer's Favourite",
+  note: "A little bit of everything from the farm.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 1],
+    ["Basil", 1],
+    ["Mushroom", 1],
+    ["Cheese", 1],
+    ["Pepperoni", 1]
+  ]
+},
+
+{
+  name: "Double Mushroom Melt",
+  note: "For the customer who really loves mushrooms.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Mushroom", 3],
+    ["Cheese", 2],
+    ["Tomato", 1]
+  ]
+},
+
+{
+  name: "Market Day",
+  note: "A colourful mix inspired by the morning market.",
+  ingredients: [
+    ["Wheat crust", 1],
+    ["Tomato", 2],
+    ["Basil", 1],
+    ["Pepperoni", 1],
+    ["Cheese", 1]
+  ]
+}
 
 ];
 
-// MARKET ITEMS
+// Basic receipt display information only.
+// Nothing is saved or connected to player data.
 
-const supplies = [
-    {name:"Tomato Seeds", crop:"Tomatoes", cost:2, grow:1},
-    {name:"Basil Seeds", crop:"Basil", cost:2, grow:1},
-    {name:"Mushroom Spores", crop:"Mushrooms", cost:3, grow:2},
-    {name:"Wheat Seeds", crop:"Wheat", cost:3, grow:2},
-    {name:"Cheese", crop:"Cheese", cost:4, grow:0},
-    {name:"Pepperoni", crop:"Pepperoni", cost:5, grow:0}
-];
+let lastIndex = -1;
+let orderNumber = 1;
+let currentText = "";
 
-// PLAYER DATA
+const receipt = document.getElementById("receipt");
+const copyButton = document.getElementById("copyButton");
+const screenMessage = document.getElementById("screenMessage");
+const screenHint = document.getElementById("screenHint");
+const toast = document.getElementById("toast");
 
-let cash = 20;
-let actions = 3;
-let turn = 1;
-let active = -1;
+// Pick a random order.
+// Avoid repeating the same order twice in a row.
 
-let printed = new Set();
-let completed = new Set();
+function nextOrder() {
 
-let inventory = {
-    Tomatoes: 0,
-    Basil: 0,
-    Mushrooms: 0,
-    Wheat: 0,
-    Cheese: 0,
-    Pepperoni: 0
-};
+  let index = Math.floor(Math.random() * orders.length);
 
-// UPDATE WEBSITE
-
-function update() {
-
-    document.getElementById("cash").textContent = "$" + cash;
-
-    drawReceipts();
-    drawMarket();
-
-    const order = orders[active];
-
-    document.getElementById("harvestBtn").disabled =
-        active < 0 || actions === 0;
-
-    document.getElementById("nextBtn").disabled =
-        actions !== 0;
-
-    if (active < 0) return;
-
-    document.getElementById("activeTitle").textContent =
-        order.name;
-
-    let ingredients = order.items.map(item => {
-
-        let crop = item[1];
-        let ready = inventory[crop] > 0;
-
-        return `
-            <div class="ingredient ${ready ? 'done' : ''}">
-                <b>${item[0]}</b>
-                <span>${ready ? "Ready ✓" : "Needed"}</span>
-            </div>
-        `;
-
-    }).join("");
-
-    document.getElementById("ingredientList").innerHTML =
-        ingredients;
-
-    let have = order.items.filter(
-        item => inventory[item[1]] > 0
-    ).length;
-
-    document.getElementById("progressBar").style.width =
-        (have / order.items.length * 100) + "%";
-
-    document.getElementById("makeBtn").disabled =
-        actions === 0 ||
-        !order.items.every(item => inventory[item[1]] > 0);
-
-}
-
-// RECEIPT DISPLAY
-
-function drawReceipts() {
-
-    document.getElementById("receiptChoices").innerHTML =
-        orders.map((order, i) => `
-
-            <button
-                class="receipt-card ${active === i ? 'active' : ''}"
-                onclick="chooseOrder(${i})"
-                ${completed.has(i) ? 'disabled' : ''}
-            >
-
-                <b>${order.name}</b>
-
-                <br>
-
-                <small>
-                    $${order.pay} + $${order.bonus} delivery
-                </small>
-
-            </button>
-
-        `).join("");
-
-}
-
-// PRINT RECEIPT
-
-function printOrder() {
-
-    let i = orders.findIndex(
-        (order, index) =>
-        !printed.has(index) &&
-        !completed.has(index)
-    );
-
-    if (i === -1) {
-        alert("No new receipts available!");
-        return;
+  if (orders.length > 1) {
+    while (index === lastIndex) {
+      index = Math.floor(Math.random() * orders.length);
     }
+  }
 
-    if (active !== -1 && !completed.has(active)) {
-        alert("Finish your current order first!");
-        return;
-    }
+  lastIndex = index;
 
-    active = i;
-    printed.add(i);
-
-    let order = orders[i];
-
-    document.getElementById("rNumber").textContent =
-        String(i + 1).padStart(3, "0");
-
-    document.getElementById("rName").textContent =
-        order.name;
-
-    document.getElementById("rPay").textContent =
-        "$" + order.pay;
-
-    document.getElementById("rBonus").textContent =
-        "$" + order.bonus;
-
-    document.getElementById("rItems").innerHTML =
-        order.items.map(item => `
-            <div class="receipt-row">
-                <span>${item[0]}</span>
-                <b>× 1</b>
-            </div>
-        `).join("");
-
-    document.getElementById("receipt").classList.add("show");
-
-    document.getElementById("screenTitle").textContent =
-        "Order received!";
-
-    document.getElementById("screenText").textContent =
-        "Gather your ingredients and prepare your pizza.";
-
-    update();
-
+  return orders[index];
 }
 
-// SELECT ORDER
+// Print a new receipt.
 
-function chooseOrder(i) {
+function printReceipt() {
 
-    if (!printed.has(i)) {
-        alert("Print this receipt first!");
-        return;
-    }
+  const order = nextOrder();
 
-    if (active !== -1 && active !== i && !completed.has(active)) {
-        alert("Complete your current order first!");
-        return;
-    }
+  const number = String(orderNumber++)
+    .padStart(3, "0");
 
-    active = i;
-    update();
+  // Create the ingredient list.
 
+  const rows = order.ingredients.map(([name, amount]) =>
+    `<li>
+      <span>${name}</span>
+      <span>× ${amount}</span>
+    </li>`
+  ).join("");
+
+  // Display the receipt.
+
+  receipt.className = "receipt print-pop";
+
+  receipt.innerHTML = `
+    <div class="receipt-head">
+      <div class="receipt-logo">WildSlice 🍕</div>
+      <div class="receipt-kicker">
+        MADE FRESH, MADE WITH CARE
+      </div>
+    </div>
+
+    <div class="receipt-no">
+      <span>ORDER #${number}</span>
+      <span>TAKEAWAY</span>
+    </div>
+
+    <div class="section-label">CUSTOMER ORDER</div>
+
+    <div class="order-name">${order.name}</div>
+
+    <div class="order-desc">${order.note}</div>
+
+    <div class="section-label">WHAT GOES ON IT</div>
+
+    <ul class="items">
+      ${rows}
+    </ul>
+
+    <div class="receipt-foot">
+      One delicious pizza, coming up!<br>
+      Thank you for choosing WildSlice.
+    </div>
+  `;
+
+  // Prepare text for the optional Copy button.
+
+  currentText =
+    `WILDSLICE — ORDER #${number}\n` +
+    `${order.name}\n` +
+    `${order.note}\n\n` +
+    `INGREDIENTS\n` +
+    order.ingredients.map(([name, amount]) =>
+      `${name} x ${amount}`
+    ).join("\n");
+
+  // Update the machine screen.
+
+  screenMessage.textContent = "Order received!";
+
+  screenHint.textContent =
+    `${order.name} · Receipt #${number} is ready.`;
+
+  copyButton.disabled = false;
+
+  toast.textContent = "Fresh receipt printed.";
+
+  // Restart the receipt animation.
+
+  void receipt.offsetWidth;
 }
 
-// BUY SUPPLIES
+// Print button.
 
-function drawMarket() {
+document
+  .getElementById("printButton")
+  .addEventListener("click", printReceipt);
 
-    document.getElementById("marketGrid").innerHTML =
-        supplies.map((item, i) => `
+// Copy button.
 
-            <div class="market-item">
+copyButton.addEventListener("click", async () => {
 
-                <button onclick="buy(${i})">
-                    BUY $${item.cost}
-                </button>
+  if (!currentText) return;
 
-                <b>${item.name}</b>
+  try {
 
-                <br>
+    await navigator.clipboard.writeText(currentText);
 
-                <small>
-                    ${item.grow ? "Grows in " + item.grow + " turn(s)" : "Ready to use"}
-                </small>
+    toast.textContent = "Receipt details copied.";
 
-            </div>
+  } catch {
 
-        `).join("");
+    toast.textContent =
+      "Copy isn't available in this browser.";
 
-}
+  }
 
-function buy(i) {
-
-    let item = supplies[i];
-
-    if (actions === 0 || cash < item.cost) {
-        alert("Not enough money or actions!");
-        return;
-    }
-
-    cash -= item.cost;
-    actions--;
-
-    if (item.grow === 0) {
-        inventory[item.crop]++;
-    }
-
-    update();
-
-}
-
-// HARVEST CROPS
-
-function harvest() {
-
-    if (active < 0 || actions === 0) return;
-
-    let order = orders[active];
-
-    let needed = order.items.find(
-        item => inventory[item[1]] === 0 && item[2] > 0
-    );
-
-    if (!needed) {
-        alert("No growable ingredients left. Check the market!");
-        return;
-    }
-
-    inventory[needed[1]]++;
-    actions--;
-
-    update();
-
-}
-
-// MAKE PIZZA
-
-function makePizza() {
-
-    let order = orders[active];
-
-    let ready = order.items.every(
-        item => inventory[item[1]] > 0
-    );
-
-    if (!ready || actions === 0) return;
-
-    actions--;
-
-    cash += order.pay / 2;
-
-    completed.add(active);
-
-    alert("Pizza completed! You earned half the payment: $" + order.pay / 2);
-
-    document.getElementById("screenTitle").textContent =
-        "Order complete!";
-
-    document.getElementById("screenText").textContent =
-        "Your pizza is ready. You earned half the order value.";
-
-    active = -1;
-
-    update();
-
-}
-
-// END TURN
-
-function nextTurn() {
-
-    turn++;
-    actions = 3;
-
-    update();
-
-}
-
-// OPTIONAL VOICE FEATURE
-
-function speakOrder() {
-
-    let message = active >= 0
-        ? "Sure thing, here is your order: " + orders[active].name
-        : "Welcome to Wild Slice! Get your order to begin.";
-
-    let speech = new SpeechSynthesisUtterance(message);
-
-    speech.rate = 0.95;
-
-    window.speechSynthesis.speak(speech);
-
-}
-
-// START WEBSITE
-
-update();
+});
 
 </script>
 
 </body>
 </html>
-
